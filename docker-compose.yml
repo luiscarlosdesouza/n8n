@@ -1,0 +1,28 @@
+
+version: '3.8'
+
+volumes:
+  n8n_data:
+
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    container_name: n8n_local
+    restart: always
+    ports:
+      - "5678:5678"
+    environment:
+      # Configurações de Fuso Horário (Altere para o seu fuso, se necessário)
+      - GENERIC_TIMEZONE=America/Sao_Paulo
+      - TZ=America/Sao_Paulo
+      
+      # Configurações de Ambiente
+      - NODE_ENV=production
+      
+      # URLs para funcionamento interno e Webhooks
+      - WEBHOOK_URL=http://localhost:5678/
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+    volumes:
+      - n8n_data:/home/node/.n8n
